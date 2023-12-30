@@ -2,7 +2,7 @@ import React from 'react'
 import { WordsPage } from '../src/WordsPage'
 import { WordContextProvider } from '../src/context/wordsContet'
 
-import { test, describe, expect, beforeEach, afterEach, expectTypeOf } from 'vitest'
+import { test, describe, expect, beforeEach, afterEach, expectTypeOf, vi } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { type UserEvent, userEvent } from '@testing-library/user-event'
 
@@ -37,5 +37,38 @@ describe('Fetching 10 words using an API Rest', () => {
 
   test('Body should contains 10 words', () => {
     expect(body.length).toBe(10)
+  })
+})
+
+
+describe('Rendering component calling word API Rest', () => {
+  beforeEach<LocalTestContext>((context) => {
+    const mockResponse = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
+    vi.spyOn(window, "fetch").mockImplementationOnce(() => {
+      return Promise.resolve({
+        json: () => Promise.resolve(mockResponse)
+      } as Response)
+    })
+
+    render(
+      <WordContextProvider>
+        <WordsPage />
+      </WordContextProvider>
+    )
+    const user = userEvent.setup()
+    context.user = user;
+  })
+
+  test<LocalTestContext>('Body should contains 10 words', async ({ user }) => {
+    const button = await screen.findByText(/get words/i)
+    expect(button).toBeDefined()
+
+    await user.click(button)
+
+    const wordsList = await screen.findByRole('list')
+    expect(wordsList).toBeDefined()
+    expect(wordsList.childElementCount).toBe(10)
+
+    screen.debug()
   })
 })

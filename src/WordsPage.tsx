@@ -12,8 +12,8 @@ export function WordsPage() {
       {
         words &&
         <ul>
-          {words.map(word => (
-            <li key={word}>{word}</li>
+          {words.map((word, index) => (
+            <li key={index}>{word}</li>
           ))}
         </ul>
       }
