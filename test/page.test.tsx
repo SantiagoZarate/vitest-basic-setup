@@ -2,7 +2,7 @@ import React from 'react'
 import { OtherPage } from '../src/OtherPage'
 import { userContext, usernames } from '../src/context/userContext'
 
-import { test, describe, expect, beforeEach, beforeAll, afterEach } from 'vitest'
+import { test, describe, expect, beforeEach, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { type UserEvent, userEvent } from '@testing-library/user-event'
 
