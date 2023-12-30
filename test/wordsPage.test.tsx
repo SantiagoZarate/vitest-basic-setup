@@ -2,7 +2,7 @@ import React from 'react'
 import { WordsPage } from '../src/WordsPage'
 import { WordContextProvider } from '../src/context/wordsContet'
 
-import { test, describe, expect, beforeEach, afterEach } from 'vitest'
+import { test, describe, expect, beforeEach, afterEach, expectTypeOf } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { type UserEvent, userEvent } from '@testing-library/user-event'
 
@@ -10,33 +10,32 @@ interface LocalTestContext {
   user: UserEvent
 }
 
-beforeEach<LocalTestContext>((context) => {
-  render(
-    <WordContextProvider>
-      <WordsPage />
-    </WordContextProvider>
-  )
+describe('Fetching 10 words using an API Rest', () => {
+  let response: Response;
+  let body: Array<{ [key: string]: any }>;
 
-  const user = userEvent.setup()
-  context.user = user
-  screen.debug()
-})
+  beforeEach(async () => {
+    response = await fetch("https://random-word-api.herokuapp.com/word?number=10")
+    body = await response.json()
+  })
 
-afterEach(() => {
-  cleanup()
-})
+  afterEach(() => {
+    cleanup()
+  })
 
-describe('<OtherPage />', () => {
-  test<LocalTestContext>('a list of words should be fetched and rendered when button is cliked', async ({ user }) => {
-    if (!user) throw Error('User should be initialized on before Each')
+  test('Response should be succesfull', () => {
+    expect(response.status).toBe(200)
+  })
 
-    const button = await screen.findByText('get words!')
-    expect(button).toBeDefined()
+  test('Should have content-type', () => {
+    expect(response.headers.get('Content-Type')).toBe('application/json')
+  })
 
-    await user.click(button)
+  test('Response should be succesfull', () => {
+    expectTypeOf(body).toBeArray()
+  })
 
-    const wordsList = await screen.getByRole('list')
-    expect(wordsList).toBeDefined()
-    screen.debug()
+  test('Body should contains 10 words', () => {
+    expect(body.length).toBe(10)
   })
 })
