@@ -1,6 +1,6 @@
 const API_URL = "https://random-word-api.herokuapp.com/word"
 
-export function getWords(wordNumber : number) {
-  return fetch(API_URL + '?number=' + wordNumber)
+export function getWords() {
+  return fetch(API_URL + '?number=10')
     .then(res => res.json())
 }

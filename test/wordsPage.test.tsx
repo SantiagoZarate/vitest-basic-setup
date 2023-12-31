@@ -1,6 +1,6 @@
 import React from 'react'
 import { WordsPage } from '../src/WordsPage'
-import { WordContextProvider } from '../src/context/wordsContet'
+import { WordContextProvider, wordContext } from '../src/context/wordsContet'
 
 import { test, describe, expect, beforeEach, afterEach, expectTypeOf, vi } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
@@ -42,7 +42,11 @@ describe('Fetching 10 words using an API Rest', () => {
 
 
 describe('Rendering component calling word API Rest', () => {
-  beforeEach<LocalTestContext>((context) => {
+  afterEach(() => {
+    cleanup();
+  })
+
+  test('Body should contains 10 words', async () => {
     const mockResponse = ['a', 'b', 'c', 'd', 'e', 'a', 'b', 'c', 'd', 'e']
     vi.spyOn(window, "fetch").mockImplementationOnce(() => {
       return Promise.resolve({
@@ -56,10 +60,7 @@ describe('Rendering component calling word API Rest', () => {
       </WordContextProvider>
     )
     const user = userEvent.setup()
-    context.user = user;
-  })
 
-  test<LocalTestContext>('Body should contains 10 words', async ({ user }) => {
     const button = await screen.findByText(/get words/i)
     expect(button).toBeDefined()
 
@@ -68,7 +69,28 @@ describe('Rendering component calling word API Rest', () => {
     const wordsList = await screen.findByRole('list')
     expect(wordsList).toBeDefined()
     expect(wordsList.childElementCount).toBe(10)
+  })
 
+  test('Using mocked provider', async () => {
+    render(
+      <wordContext.Provider value={
+        {
+          getWords: async () => ['santi', 'juan', 'mateos']
+        }
+      }>
+        <WordsPage />
+      </wordContext.Provider>
+    )
+
+    const user = userEvent.setup()
+    const button = await screen.findByText(/get words/i)
+    expect(button).toBeDefined()
+
+    await user.click(button)
+
+    const wordsList = await screen.findByRole('list')
+    expect(wordsList).toBeDefined()
     screen.debug()
+    expect(wordsList.childElementCount).toBe(3)
   })
 })
