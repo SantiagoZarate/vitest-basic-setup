@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test:other": "vitest ./test/page.test.ts",
     "test:words": "vitest ./test/wordsPage.test.ts",
+    "test:products": "vitest ./test/products.test.ts",
     "preview": "vite preview"
   },
   "dependencies": {

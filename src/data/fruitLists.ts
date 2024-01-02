@@ -1,4 +1,4 @@
-export const fruits = [
+export const fruitList4elements = [
   {
     name: 'orange',
     hasDiscount: true,
@@ -15,4 +15,11 @@ export const fruits = [
     name: 'apple',
     hasDiscount: true,
   },
+]
+
+export const fruitList1elements = [
+  {
+    name: 'orange',
+    hasDiscount: true,
+  }
 ]

@@ -12,21 +12,23 @@ export function FilterableTable() {
             onChange={updateSearchBar}
             type="text" />
         </label>
-        <label htmlFor="">
+        <label htmlFor="check">
           <input
+            id="check"
             onChange={updateHasDiscount}
             checked={filters.hasDiscount}
             type="checkbox" />
           show products with offer
         </label>
       </header>
-      <ul>
-        {
-          products.map(fruit => (
-            <li key={fruit.name}>{fruit.name}</li>
-          ))
-        }
-      </ul>
+      {products?.length > 0 &&
+        <ul>
+          {
+            products.map(fruit => (
+              <li key={fruit.name}>{fruit.name}</li>
+            ))
+          }
+        </ul>}
     </article>
   )
 }
