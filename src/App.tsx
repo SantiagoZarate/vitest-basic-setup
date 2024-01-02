@@ -1,7 +1,8 @@
 // import { OtherPage } from "./OtherPage";
-import { WordsPage } from "./WordsPage";
 // import { UserContextProvider } from "./context/userContext";
+import { WordsPage } from "./WordsPage";
 import { WordContextProvider } from "./context/wordsContet";
+import { FilterableTable } from "./pages/FilterableTable";
 
 export default function App() {
   return (
@@ -10,9 +11,11 @@ export default function App() {
       <OtherPage />
     </UserContextProvider> */}
 
-    <WordContextProvider>
+    {/* <WordContextProvider>
       <WordsPage />
-    </WordContextProvider>
+    </WordContextProvider> */}
+
+    <FilterableTable />
     </>
   )
 }
