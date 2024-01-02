@@ -1,21 +1,24 @@
 // import { OtherPage } from "./OtherPage";
 // import { UserContextProvider } from "./context/userContext";
-import { WordsPage } from "./WordsPage";
-import { WordContextProvider } from "./context/wordsContet";
+// import { WordsPage } from "./WordsPage";
+// import { WordContextProvider } from "./context/wordsContet";
+import { ProductsProvider } from "./context/productsContext";
 import { FilterableTable } from "./pages/FilterableTable";
 
 export default function App() {
   return (
     <>
-    {/* <UserContextProvider>
+      {/* <UserContextProvider>
       <OtherPage />
     </UserContextProvider> */}
 
-    {/* <WordContextProvider>
+      {/* <WordContextProvider>
       <WordsPage />
     </WordContextProvider> */}
 
-    <FilterableTable />
+      <ProductsProvider>
+        <FilterableTable />
+      </ProductsProvider>
     </>
   )
 }
