@@ -1,7 +1,7 @@
 import { useProducts } from "../hooks/useProducts"
 
 export function FilterableTable() {
-  const { filters, products, updateHasDiscount, updateSearchBar } = useProducts()
+  const { filters, products, updateHasDiscount, updateSearchBar, addProduct } = useProducts()
 
   return (
     <article>
@@ -15,6 +15,7 @@ export function FilterableTable() {
         <label htmlFor="check">
           <input
             id="check"
+            placeholder="Filtrar..."
             onChange={updateHasDiscount}
             checked={filters.hasDiscount}
             type="checkbox" />
@@ -29,6 +30,14 @@ export function FilterableTable() {
             ))
           }
         </ul>}
+      <form onSubmit={addProduct} action="">
+        <input
+        placeholder="crear producto..."
+        type="text" />
+        <button>
+          crear
+        </button>
+      </form>
     </article>
   )
 }

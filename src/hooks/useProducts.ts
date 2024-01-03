@@ -5,7 +5,7 @@ import { productsContext } from "../context/productsContext"
 export function useProducts() {
   const value = useContext(productsContext)
   if (!value) throw Error('ProductsProvider must wrap this hook use case')
-  const { products } = value
+  const { products, setProducts } = value
   const [filters, setFilters] = useState<FilterType>({
     hasDiscount: false,
     name: ''
@@ -33,10 +33,29 @@ export function useProducts() {
     })
   }
 
+  const addProduct = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formInput = event.currentTarget.querySelector('input')
+    const productName = formInput?.value!
+
+    if (productName.startsWith(' ') || productName.length === 0) return;
+
+    const newProduct = {
+      name: productName,
+      hasDiscount: false
+    }
+
+    setProducts([
+      ...products,
+      newProduct
+    ])
+  }
+
   return {
     filters,
     products: filteredProducts,
     updateHasDiscount: handleToggleHasDiscount,
-    updateSearchBar: handleUpdateFilterName
+    updateSearchBar: handleUpdateFilterName,
+    addProduct
   }
 }

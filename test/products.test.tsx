@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { fruitList4elements, fruitList1elements } from '../src/data/fruitLists'
 import { FilterableTable } from '../src/pages/FilterableTable'
 import { productsContext } from '../src/context/productsContext'
@@ -6,6 +6,7 @@ import { productsContext } from '../src/context/productsContext'
 import { test, describe, expect, beforeEach, afterEach } from 'vitest'
 import { render, screen, cleanup } from '@testing-library/react'
 import { type UserEvent, userEvent } from '@testing-library/user-event'
+import { Product } from '../src/types'
 
 interface LocalTestContext {
   user: UserEvent,
@@ -13,9 +14,11 @@ interface LocalTestContext {
 
 describe('rendering a product list and filtering products', () => {
   beforeEach<LocalTestContext>(async (context) => {
+    const [products, setProducts] = useState<Product[]>(fruitList4elements);
     render(
       <productsContext.Provider value={{
-        products: fruitList4elements
+        products,
+        setProducts
       }}>
         <FilterableTable />
       </productsContext.Provider>
@@ -49,9 +52,11 @@ describe('rendering a product list and filtering products', () => {
 
 describe('product lists with 1 elements', () => {
   beforeEach<LocalTestContext>(async (context) => {
+    const [products, setProducts] = useState<Product[]>(fruitList1elements);
     render(
       <productsContext.Provider value={{
-        products: fruitList1elements
+        products,
+        setProducts
       }}>
         <FilterableTable />
       </productsContext.Provider>
