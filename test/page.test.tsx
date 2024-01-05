@@ -1,5 +1,5 @@
 import React from 'react'
-import { OtherPage } from '../src/OtherPage'
+import { OtherPage } from '../src/pages/OtherPage'
 import { userContext, usernames } from '../src/context/userContext'
 
 import { test, describe, expect, beforeEach, afterEach } from 'vitest'

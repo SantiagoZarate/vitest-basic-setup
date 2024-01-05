@@ -1,4 +1,4 @@
-import { useWordsApi } from "./hooks/useWordsApi"
+import { useWordsApi } from "../hooks/useWordsApi"
 
 export function WordsPage() {
   const { handleGetWords, words } = useWordsApi()

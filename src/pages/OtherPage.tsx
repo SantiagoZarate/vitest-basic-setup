@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUsersApi } from "./hooks/useUsersApi"
+import { useUsersApi } from "../hooks/useUsersApi"
 
 export function OtherPage() {
   const { getOneUser, getUsers } = useUsersApi();
